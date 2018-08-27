@@ -1,10 +1,11 @@
 <template >
   <transition mode="out-in" appear>
-    <div v-if="dialogShow" class="dialog-wrapper" :class=" withShadow ? 'dialog-shadow' +  dialogClass : dialogClass"  @click="shadowHandle">
+    <div v-if="dialogShow" class="dialog-wrapper " :class=" withShadow ? 'dialog-shadow ' +  dialogClass : dialogClass"  @click="shadowHandle">
       <!--<div v-if="withShadow" class="dialog-shadow"></div>-->
       <toast v-if="isToast" class="toast-wrapper" :content="content"></toast>
       <loading v-if="isLoading" class="loading-wrapper" :content="content"></loading>
-      <div v-else-if="isConfirm || isAlert || isComment"  class="dialog-content">
+      <div v-else-if="isConfirm || isAlert || isComponent"  class="dialog-content">
+
         <div v-if="isConfirm || isAlert"  class="dialog-main-content">
           <div class="dialog-header">
             <div v-if="withClose" class="dialog-close-btn" @click="hideDialog">×</div>
@@ -18,7 +19,7 @@
             <div class="dialog-footer-btn" @click.user="confirmHandle">确定</div>
           </div>
         </div>
-        <div  v-if="isComment"  :is="component" @hideDialog="hideDialog"></div>
+        <div  v-if="isComponent"  class="dialog-main-content" :parentInstance="parentInstance" :title="title" :content="content" :is="component" @hideDialog="hideDialog"></div>
       </div>
 
       <div v-else>{{content}}</div>
@@ -35,7 +36,7 @@
   import Loading from '@/components/dialog/Loading'
 
   export default {
-    name:'qqqqqqqqqqqqqqqq',
+    name:'MyDialog',
     data(){
       return {
         dialogShow: false,
@@ -43,7 +44,7 @@
         isLoading: false,
         isAlert: false,
         isConfirm: false,
-        isComment: false
+        isComponent: false,
       }
     },
     components:{'toast':Toast,'loading':Loading},
@@ -98,10 +99,17 @@
           return ''
         }
       },
+      parentInstance: {
+        type: Object,
+        default:()=> {
+          return {}
+        }
+      }
     },
 
     methods: {
-      show(){
+      show(e){
+
         switch (this.type){
           case "confirm":
             this.confirm()
@@ -116,9 +124,11 @@
             this.toast()
             break
           case "userDefine":
+
             this.userDefine()
             break
           default :
+
             this.confirm()
         }
 
@@ -151,7 +161,7 @@
         },2000)
       },
       confirm(){
-        console.log(this.withShadow ,'withShadow')
+
         this.isConfirm = true;
         this.showDialog()
       },
@@ -164,17 +174,15 @@
         this.isLoading = true;
         this.showDialog()
       },
-      userDefine(){
-        this.isComment = true;
+      userDefine(e){
+
+        this.isComponent = true;
         this.showDialog()
       }
     },
     created(){
-//      let _this = this;
-//      console.log(this.component)
-//      let test = Object.assign({},this.component)
-//      this.propCom = test
-//      console.log(this.loading())
+      this.$emit('test',{ss:'uiop'})
+
     }
   }
 </script>
@@ -203,6 +211,10 @@
     background: rgba(0,0,0,.4);
   }
 
+
+</style>
+<style lang="less">
+
   .dialog-content {
     position: absolute;
     top: 50%;
@@ -227,22 +239,21 @@
   .dialog-footer {
     display: flex;
     padding: 0 34rem/100 34rem/100;
-    .dialog-footer-btn {
-      flex: 1;
-      margin-right: 28rem/100;
-      height: 88rem/100;
-      line-height: 88rem/100;
-      background-color: #fff;
-      border-radius: 44rem/100;
-      text-align: center;
-      color: #323232;
-      font-size: 24rem/100;
-      &:last-of-type{
-        margin-right: 0;
-        background-color: #323232;
-        color: #fff;
-      }
-    }
+  .dialog-footer-btn {
+    flex: 1;
+    margin-right: 28rem/100;
+    height: 88rem/100;
+    line-height: 88rem/100;
+    background-color: #fff;
+    border-radius: 44rem/100;
+    text-align: center;
+    color: #323232;
+    font-size: 24rem/100;
+  &:last-of-type{
+     margin-right: 0;
+     background-color: #323232;
+     color: #fff;
+   }
   }
-
+  }
 </style>

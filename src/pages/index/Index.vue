@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import testDialog from '@/components/testDialog'
+  import errDialog from '@/components/errDialog'
 
   export default {
     data(){
@@ -16,12 +16,14 @@
     },
     methods: {
       testDialog(){
+        let _this = this;
         this.$dialog.show({
+          parentInstance: _this,
           content: '<h1>aa</h1>',
-          component: testDialog,
+          component: errDialog,
           dialogClass:'testClass',
           title:'ceshi',
-          type: "loading"
+          type: "userDefine"
         });
 //        this.$dialog.loading({
 //          content: '<h1>qqqqq</h1>',
@@ -41,7 +43,9 @@
       }
     },
     created(){
-
+//      console.log('ss')
+//      this.$router.push('/error')
+//      console.log('')
     }
   }
 </script>

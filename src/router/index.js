@@ -2,8 +2,6 @@ import Vue from 'vue'
 
 import Router from 'vue-router'
 
-
-
 import Index from '@/pages/index/Index'
 
 import Error from '@/pages/error/Error'
@@ -29,11 +27,8 @@ import Questions from '@/pages/center/Questions'
 
 Vue.use(Router)
 
-
-
-
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',

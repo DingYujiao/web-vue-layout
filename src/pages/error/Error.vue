@@ -1,9 +1,10 @@
 <template>
-  <div></div>
+  <div>出错了ssss</div>
 </template>
 
 <script>
   export default {
+    name: 'error',
     data(){
       return {
 

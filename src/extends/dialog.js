@@ -13,7 +13,7 @@ dialogMethods.forEach((ele,i)=>{
 
     let dialogInstance = new DialogExtends({propsData}).$mount(div);
     DialogExtends['$'+ele] = dialogInstance
-    dialogInstance[ele]();
+    dialogInstance[ele](Vue);
   }
 })
 
